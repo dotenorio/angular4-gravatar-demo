@@ -1,0 +1,48 @@
+<form (ngSubmit)="onSubmit()" #gravatarForm="ngForm">
+  <div class="form-group">
+    <input type="email" class="form-control" name="email" id="email" [(ngModel)]="email" placeholder="E-mail" #emailField="ngModel" required>
+    <div *ngIf="emailField.errors && (emailField.dirty || emailField.touched)" class="alert alert-danger">
+      <div [hidden]="!emailField.errors.required">
+        E-mail é obrigatório
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success form-control" [disabled]="!gravatarForm.form.valid">Obter dados do perfil</button>
+</form>
+
+<div *ngIf="resultado">
+  <hr>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Dados:</h3>
+    </div>
+    <div class="panel-body">
+      <dl>
+        <dt>Gravatar</dt>
+        <dd>
+          <img src="{{resultado.entry[0].thumbnailUrl}}" alt="emailGravatar" class="img-rounded">
+        </dd>
+      </dl>
+      <dl>
+        <dt>ID</dt>
+        <dd>{{resultado.entry[0].id}}</dd>
+      </dl>
+      <dl>
+        <dt>Nome</dt>
+        <dd>{{resultado.entry[0].name.formatted}}</dd>
+      </dl>
+      <dl>
+        <dt>URL</dt>
+        <dd>{{resultado.entry[0].profileUrl}}</dd>
+      </dl>
+      <dl>
+        <dt>Sobre</dt>
+        <dd>{{resultado.entry[0].aboutMe}}</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<pre *ngIf="resultado">
+  {{resultado | json}}
+</pre>
